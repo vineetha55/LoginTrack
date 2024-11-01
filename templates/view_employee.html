@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% include 'left_nav.html' %}
+<a href="/add_employees" class="btn btn-info">Add employees</a>
+<table class="table table-striped">
+  <thead>
+    <tr>
+       <th scope="col">#</th>
+      <th scope="col">Name</th>
+    <th scope="col">Email</th>
+    <th scope="col">Mobile</th>
+    <th scope="col">Password</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for i in data  %}
+    <tr>
+      <th scope="row">{{forloop.counter}}</th>
+      <td>{{i.name}}</td>
+    <td>{{i.email}}</td>
+    <td>{{i.mobile}}</td>
+    <td>{{i.password}}</td>
+    <td><a href="/login_info_emp/{{i.id}}">Login info</a></td>
+      <td><a href="/edit_emp/{{i.id}}">Edit</a></td>
+      <td><a href="/delete_emp/{{i.id}}">Delete</a></td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+</body>
+</html>

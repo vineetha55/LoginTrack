@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% include 'left_nav.html' %}
+    <form action="/update_employee/{{d.id}}" method="post" enctype="multipart/form-data">{% csrf_token %}
+        <div class="container">
+          <h1>Edit Form</h1>
+          <p>Please edit in this form to update an Employee.</p>
+
+              <label for="email"><b>Name</b></label>
+            <input type="text" name="name" placeholder="Enter Name" class="form-control" value="{{d.name}}" required>
+          <label for="email"><b>Email</b></label>
+          <input type="text" placeholder="Enter Email" name="email" class="form-control" value="{{d.email}}" required>
+
+          <label for="psw"><b>Password</b></label>
+          <input type="password" placeholder="Enter Password" class="form-control" value="{{d.password}}" name="password" required>
+
+                  <label for="email"><b>Phone Number</b></label>
+            <br>
+           <input type="phone" name="mobile" class="form-control mb-3" value="{{d.mobile}}" placeholder="1234567890" required>
+
+
+          <div class="clearfix">
+
+            <button type="submit" class="btn btn-info">Create</button>
+          </div>
+        </div>
+      </form>
+
+
+</body>
+</html>

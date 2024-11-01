@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% include 'left_nav.html' %}
+              <div class="tab-content pt-2">
+
+                <div class="tab-pane fade show active profile-overview" id="profile-overview">
+                            <h5 class="card-title">Login Details</h5>
+
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 label ">Public IP Address</div>
+                    <div class="col-lg-9 col-md-8">{{r.public_ip_address}}</div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 label">Private IP Address</div>
+                    <div class="col-lg-9 col-md-8">{{r.private_ip_address}}</div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 label">Country Code</div>
+                    <div class="col-lg-9 col-md-8">{{r.country_code}}</div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 label">Country Name</div>
+                    <div class="col-lg-9 col-md-8">{{r.country_name}}</div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 label">City</div>
+                    <div class="col-lg-9 col-md-8">{{r.city}}</div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 label">Postal</div>
+                    <div class="col-lg-9 col-md-8">{{r.postal}}</div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 label">Latitude</div>
+                    <div class="col-lg-9 col-md-8">{{r.latitude}}</div>
+                  </div>
+                 <div class="row">
+                    <div class="col-lg-3 col-md-4 label">Longitude</div>
+                    <div class="col-lg-9 col-md-8">{{r.longitude}}</div>
+                  </div>
+                   <div class="row">
+                    <div class="col-lg-3 col-md-4 label">Postal</div>
+                    <div class="col-lg-9 col-md-8">{{r.postal}}</div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 label">State</div>
+                    <div class="col-lg-9 col-md-8">{{r.state}}</div>
+                  </div>
+
+
+                   <div class="row">
+                    <div class="col-lg-3 col-md-4 label">Login System ip_address</div>
+                    <div class="col-lg-9 col-md-8">{{r.login_system_ip_address}}</div>
+                  </div>
+                 <div class="row">
+                    <div class="col-lg-3 col-md-4 label">Login System Name</div>
+                    <div class="col-lg-9 col-md-8">{{r.login_system_name}}</div>
+                  </div>
+
+                </div>
+              </div>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Simple Reistration Form</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Montserrat:400,500&display=swap');
+
+body {
+	font-family: Montserrat,Arial, Helvetica, sans-serif;
+	background-color:#f7f7f7;
+}
+</style>
+
+</head>
+<body>
+{% include 'left_nav.html' %}
+    <form action="/save_employee/" method="post" enctype="multipart/form-data">{% csrf_token %}
+        <div class="container">
+          <h1>Employees Creation</h1>
+          <p>Please fill in this form to create an Employee.</p>
+
+              <label for="email"><b>Name</b></label>
+            <input type="text" name="name" placeholder="Enter Name" class="form-control" required>
+          <label for="email"><b>Email</b></label>
+          <input type="text" placeholder="Enter Email" name="email" class="form-control" required>
+
+          <label for="psw"><b>Password</b></label>
+          <input type="password" placeholder="Enter Password" class="form-control" name="password" required>
+
+                  <label for="email"><b>Phone Number</b></label>
+            <br>
+           <input type="phone" name="mobile" class="form-control mb-3" placeholder="1234567890" required>
+
+
+          <div class="clearfix">
+
+            <button type="submit" class="btn btn-info">Create</button>
+          </div>
+        </div>
+      </form>
+
+
+</body>
+</html>
