@@ -158,6 +158,33 @@ def desktop_app_login_api(request):
                 data['token'] = user_login_id
                 return JsonResponse(data, safe=False)
 
+
+OFFICE_LOCATION = (10.014554, 76.353587)  # Replace with your office's lat/lng
+from geopy.distance import geodesic
+
+def desktop_app_login_api1(request):
+    if request.method == "POST":
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        latitude = float(request.POST.get('latitude'))
+        longitude = float(request.POST.get('longitude'))
+
+        # Check if user is within 2 km of the office
+        user_location = (latitude, longitude)
+        print(user_location)
+        distance_to_office = geodesic(user_location, OFFICE_LOCATION).km
+
+        if distance_to_office > 2:
+            return JsonResponse({"message": "Login not allowed outside 2 km radius of office."})
+
+        # Continue with authentication and token handling
+        # Perform username/password validation and return response
+        # Generate a token function here
+        return JsonResponse({"message": "success"})
+
+
+    return JsonResponse({"message": "Invalid request method"}, status=405)
+
 @csrf_exempt
 def desktop_app_logout_api(request):
     if request.method == 'POST':
