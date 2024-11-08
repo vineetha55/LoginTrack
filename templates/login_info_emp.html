@@ -6,11 +6,14 @@
 </head>
 <body>
 {% include 'left_nav.html' %}
+
+<h3>Login Details of <i>{{emp.name}}</i></h3>
 <table class="table table-striped">
   <thead>
     <tr>
     <th scope="col">#</th>
     <th scope="col">Employee Name</th>
+      <th scope="col">Date</th>
     <th scope="col">Arrival Time</th>
     <th scope="col">Left Time</th>
     <th scope="col">login Status</th>
@@ -22,6 +25,7 @@
     <tr>
       <th scope="row">{{forloop.counter}}</th>
       <td>{{i.emp_id.name}}</td>
+       <td>{{i.dt}}</td>
       <td>{{i.arrival_time}}</td>
     <td>{{i.left_time}}</td>
     <td>{{i.login_status}}</td>

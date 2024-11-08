@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% include 'left_nav.html' %}
+ <form action="/update_admin/" method="post" enctype="multipart/form-data">{% csrf_token %}
+        <div class="container">
+          <h1>Update Profile</h1>
+          <p>Please edit in this form to update your account.</p>
+
+              <label for="email"><b>Username</b></label>
+            <input type="text" name="username" placeholder="Enter Username" class="form-control" value="{{d.username}}" required>
+          <label for="email"><b>Email</b></label>
+          <input type="text" placeholder="Enter Email" name="email" required class="form-control" value="{{d.email}}">
+
+          <label for="psw"><b>Password</b></label>
+          <input type="text" placeholder="Enter Password" name="password" class="form-control" value="{{d.password}}" required>
+
+                  <label for="mobile"><b>Phone Number</b></label>
+            <br>
+
+           <input type="number" name="mobile"  class="form-control" value="{{d.mobile}}" required>
+
+
+          <div class="clearfix">
+
+            <button type="submit" class="btn btn-outline-primary mt-3">Update</button>
+          </div>
+        </div>
+      </form>
+
+</body>
+</html>

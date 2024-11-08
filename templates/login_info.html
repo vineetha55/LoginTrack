@@ -3,9 +3,70 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <style>
+  .btn-outline-primary {
+    color: purple !important;
+    border-color: purple !important;
+  }
+
+  .btn-outline-primary:hover {
+    background-color: purple !important;
+    color: white !important;
+  }
+</style>
 </head>
 <body>
 {% include 'left_nav.html' %}
+    <form action="/Month-filter-Employee/" method="post">{% csrf_token %}
+<div class="row">
+  <div class="col-sm-3">
+
+    <select name="employee" class="form-control">
+      <option>Select any Employee</option>
+      {% for i in emp_list %}
+      <option value="{{i.id}}">{{i.name}}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="col-sm-2">
+ <input type="month" class="form-control" name="month" >
+  </div>
+  <div class="col-sm-1">
+    <button type="submit" class="btn btn-outline-primary">Search</button>
+  </div>
+
+<div class="col-sm-2"></div>
+  <div class="col-sm-3 btn-group btn-group-sm">
+
+    <a href="/yesterday_attendance/" class="btn btn-outline-primary">yesterday</a>
+    <a href="/current_month/" class="btn btn-outline-primary">This Month</a>
+          <a href="/login_info/" class="btn btn-outline-primary">Today</a>
+  </div>
+</div>
+        </form>
+  <div class="row mt-4">
+
+  <div class="col-sm-3">
+      <form action="/date_filter/" method="post">{% csrf_token %}
+    <input type="date" class="form-control" name="date" >
+  </div>
+    <div class="col-sm-3">
+    <button type="submit" class="btn btn-outline-primary">Submit</button>
+          </form>
+  </div>
+
+
+     <div class="col-sm-3">
+         <form method="post" action="/month_filter/">{% csrf_token %}
+    <input type="month" class="form-control" name="month" >
+     </div>
+        <div class="col-sm-3">
+    <button type="submit" class="btn btn-outline-primary">Submit</button>
+              </form>
+  </div>
+
+</div>
+<br>
 <table class="table table-striped">
   <thead>
     <tr>
@@ -19,7 +80,7 @@
     </tr>
   </thead>
   <tbody>
-  {% for i in data  %}
+  {% for i in data %}
     <tr>
       <th scope="row">{{forloop.counter}}</th>
       <td>{{i.emp_id.name}}</td>

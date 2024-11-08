@@ -3,18 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+  <style>
+  .btn-outline-primary {
+    color: purple !important;
+    border-color: purple !important;
+  }
+
+  .btn-outline-primary:hover {
+    background-color: purple !important;
+    color: white !important;
+  }
+</style>
 </head>
 <body>
 {% include 'left_nav.html' %}
-<a href="/add_employees" class="btn btn-info">Add employees</a>
-<table class="table table-striped">
+<a href="/add_employees" class="btn btn-outline-primary mb-2">Add employees</a>
+<table class="table table-striped table-bordered table-light">
   <thead>
     <tr>
        <th scope="col">#</th>
       <th scope="col">Name</th>
     <th scope="col">Email</th>
+      <th scope="col">Joining Date</th>
     <th scope="col">Mobile</th>
     <th scope="col">Password</th>
+      <th scope="col" colspan="3">Actions</th>
     </tr>
   </thead>
   <tbody>
@@ -23,11 +36,12 @@
       <th scope="row">{{forloop.counter}}</th>
       <td>{{i.name}}</td>
     <td>{{i.email}}</td>
+      <td>{{i.joining_date}}</td>
     <td>{{i.mobile}}</td>
     <td>{{i.password}}</td>
-    <td><a href="/login_info_emp/{{i.id}}">Login info</a></td>
-      <td><a href="/edit_emp/{{i.id}}">Edit</a></td>
-      <td><a href="/delete_emp/{{i.id}}">Delete</a></td>
+    <td><a href="/login_info_emp/{{i.id}}" class="btn btn-outline-primary">Login info</a></td>
+      <td><a href="/edit_emp/{{i.id}}" class="btn btn-outline-primary">Edit</a></td>
+      <td><a href="/delete_emp/{{i.id}}" class="btn btn-outline-primary">Delete</a></td>
     </tr>
   {% endfor %}
   </tbody>

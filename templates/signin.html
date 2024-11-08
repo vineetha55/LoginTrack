@@ -6,6 +6,15 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Simple Reistration Form</title>
     <style>
+    .btn-outline-primary {
+    color: purple !important;
+    border-color: purple !important;
+  }
+
+  .btn-outline-primary:hover {
+    background-color: purple !important;
+    color: white !important;
+  }
         @import url('https://fonts.googleapis.com/css?family=Montserrat:400,500&display=swap');
 
 body {
@@ -68,7 +77,6 @@ input[type=text]:focus, input[type=password]:focus, input[type=phone]:focus, sel
 
 /* Set a style for all buttons */
 button {
-  background-color: #0eb7f4;
   color: white;
   padding: 14px 20px;
   margin: 8px 0;
@@ -93,57 +101,6 @@ button:hover {
   }
 }
 
-.youtubeBtn{
-    position: fixed;
-    right: 20px;
-  transform:translatex(-50%);
-    top: 20px;
-    cursor: pointer;
-    transition: all .3s;
-    vertical-align: middle;
-    text-align: center;
-    display: inline-block;
-  background:#000;
-  padding:2px 10px;
-  border-radius:5px;
-}
-.youtubeBtn i{
-   font-size:20px;
-  float:left;
-}
-.youtubeBtn a{
-    color:#ff0000;
-    animation: youtubeAnim 1000ms linear infinite;
-  float:right;
-}
-.youtubeBtn a:hover{
-  color:#c9110f;
-  transition:all .3s ease-in-out;
-}
-.youtubeBtn i:active{
-  transform:scale(.9);
-  transition:all .3s ease-in-out;
-}
-.youtubeBtn span{
-    font-family: 'Lato';
-    font-weight: bold;
-    color: #fff;
-    display: block;
-    font-size: 12px;
-    float: right;
-    line-height: 20px;
-    padding-left: 5px;
-
-}
-
-@keyframes youtubeAnim{
-  0%,100%{
-    color:#c9110f;
-  }
-  50%{
-    color:#ff0000;
-  }
-}
     </style>
 </head>
 <body>
@@ -163,7 +120,7 @@ button:hover {
 
           <div class="clearfix">
 
-            <button type="submit" class="btn">Sign In</button>
+            <button type="submit" class="btn btn-outline-primary">Sign In</button>
           </div>
         </div>
       </form>

@@ -12,17 +12,18 @@
           <p>Please edit in this form to update an Employee.</p>
 
               <label for="email"><b>Name</b></label>
-            <input type="text" name="name" placeholder="Enter Name" class="form-control" value="{{d.name}}" required>
+            <input type="text" name="name" placeholder="Enter Name" class="form-control" value="{{d1.name}}" required>
           <label for="email"><b>Email</b></label>
-          <input type="text" placeholder="Enter Email" name="email" class="form-control" value="{{d.email}}" required>
+          <input type="text" placeholder="Enter Email" name="email" class="form-control" value="{{d1.email}}" required>
 
           <label for="psw"><b>Password</b></label>
-          <input type="password" placeholder="Enter Password" class="form-control" value="{{d.password}}" name="password" required>
+          <input type="password" placeholder="Enter Password" class="form-control" value="{{d1.password}}" name="password" required>
 
                   <label for="email"><b>Phone Number</b></label>
             <br>
-           <input type="phone" name="mobile" class="form-control mb-3" value="{{d.mobile}}" placeholder="1234567890" required>
-
+           <input type="phone" name="mobile" class="form-control mb-3" value="{{d1.mobile}}" placeholder="1234567890" required>
+<label for="psw"><b>Joining Date</b></label>
+          <input type="date"  class="form-control" name="join_date" value="{{d1.joining_date|date:'Y-m-d'}}" required>
 
           <div class="clearfix">
 

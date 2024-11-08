@@ -12,7 +12,15 @@
 :root {
   scroll-behavior: smooth;
 }
+.btn-outline-primary {
+    color: purple !important;
+    border-color: purple !important;
+  }
 
+  .btn-outline-primary:hover {
+    background-color: purple !important;
+    color: white !important;
+  }
 body {
   font-family: "Open Sans", sans-serif;
   background: #f6f9ff;
@@ -365,7 +373,7 @@ h6 {
 }
 
 .logo img {
-  max-height: 26px;
+  max-height: 60px;
   margin-right: 6px;
 }
 
@@ -684,7 +692,7 @@ h6 {
   align-items: center;
   font-size: 15px;
   font-weight: 600;
-  color: #4154f1;
+  color: purple;
   transition: 0.3;
   background: #f6f9ff;
   padding: 10px 15px;
@@ -707,7 +715,7 @@ h6 {
 }
 
 .sidebar-nav .nav-link:hover {
-  color: #4154f1;
+  color: purple;
   background: #f6f9ff;
 }
 

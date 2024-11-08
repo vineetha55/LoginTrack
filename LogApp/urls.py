@@ -18,5 +18,15 @@ urlpatterns=[
     path("edit_emp/<id>",views.edit_emp,name="edit_emp"),
     path("update_employee/<id>",views.update_employee,name="update_employee"),
     path("delete_emp/<id>",views.delete_emp,name="delete_emp"),
-    path("login_info_emp/<id>",views.login_info_emp,name="login_info_emp")
+    path("login_info_emp/<id>",views.login_info_emp,name="login_info_emp"),
+    path('idle_notification_api/', views.idle_notification_api, name='idle_notification_api'),
+    path("profile/",views.profile,name="profile"),
+    path("sign_out/",views.sign_out,name="sign_out"),
+    path("Month-filter-Employee/",views.Month_filter_Employee,name="Month-filter-Employee"),
+    path("yesterday_attendance/",views.yesterday_attendance,name="yesterday_attendance"),
+    path("date_filter/",views.date_filter,name="date_filter"),
+    path("month_filter/",views.month_filter,name="month_filter"),
+    path("current_month/",views.current_month,name="current_month"),
+    path("update_admin/",views.update_admin,name="update_admin"),
+    path("view_all_admins/",views.view_all_admins,name="view_all_admins")
 ]

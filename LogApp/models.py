@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.db import models
 
 # Create your models here.
@@ -16,6 +18,7 @@ class tbl_Employees(models.Model):
     email = models.EmailField(null=True)
     mobile = models.IntegerField(null=True)
     password = models.CharField(max_length=100, null=True)
+    joining_date=models.DateField(null=True)
     created_date = models.DateField(auto_now_add=True)
     updated_date = models.DateField(auto_now=True)
     created_time = models.TimeField(auto_now_add=True)
@@ -43,3 +46,10 @@ class tbl_member_arrival_and_left_time_details(models.Model):
     dt = models.DateField(auto_now_add=True)
     tm = models.TimeField(auto_now_add=True)
     status = models.CharField(max_length=255, null=True)
+
+class IdleSession(models.Model):
+    user = models.ForeignKey(tbl_Employees, on_delete=models.CASCADE)
+    date = models.DateField(default=datetime.now)
+    idle_start = models.DateTimeField()
+    idle_end = models.DateTimeField()
+    total_idle_time = models.DurationField()

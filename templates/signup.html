@@ -6,6 +6,15 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Simple Reistration Form</title>
     <style>
+    .btn-outline-primary {
+    color: purple !important;
+    border-color: purple !important;
+  }
+
+  .btn-outline-primary:hover {
+    background-color: purple !important;
+    color: white !important;
+  }
         @import url('https://fonts.googleapis.com/css?family=Montserrat:400,500&display=swap');
 
 body {
@@ -68,7 +77,6 @@ input[type=text]:focus, input[type=password]:focus, input[type=number]:focus, se
 
 /* Set a style for all buttons */
 button {
-  background-color: #0eb7f4;
   color: white;
   padding: 14px 20px;
   margin: 8px 0;
@@ -119,7 +127,7 @@ button:hover {
           <label for="psw"><b>Password</b></label>
           <input type="password" placeholder="Enter Password" name="password" required>
 
-                  <label for="email"><b>Phone Number</b></label>
+                  <label for="mobile"><b>Phone Number</b></label>
             <br>
 
            <input type="number" name="mobile" placeholder="812345678" required>
@@ -127,7 +135,7 @@ button:hover {
 
           <div class="clearfix">
 
-            <button type="submit" class="btn">Sign Up</button>
+            <button type="submit" class="btn btn-outline-primary">Sign Up</button>
           </div>
         </div>
       </form>
