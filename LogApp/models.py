@@ -53,3 +53,4 @@ class IdleSession(models.Model):
     idle_start = models.DateTimeField()
     idle_end = models.DateTimeField()
     total_idle_time = models.DurationField()
+    reason=models.TextField(null=True)

@@ -1,3 +1,4 @@
+import json
 from datetime import date
 
 from django.http import JsonResponse
@@ -275,6 +276,7 @@ def idle_notification_api(request):
             idle_start = request.POST.get('idle_start', False)
             idle_end = request.POST.get('idle_end', False)
             total_idle_minutes = request.POST.get('total_idle_time', False)
+            print("hello")
 
             # Log received data for debugging
             print(username, password, idle_start, idle_end, total_idle_minutes)
@@ -372,4 +374,32 @@ def view_all_admins(request):
 
 def idle_time_view(request):
     data=IdleSession.objects.all()
-    return render(request,"idle_time_view.html",{"data":data})
+    emp_list=tbl_Employees.objects.all()
+    d = tbl_Registration_Details.objects.get(id=request.session['admin_id'])
+    return render(request,"idle_time_view.html",{"data":data,"d":d,"emp_list":emp_list})
+
+def idle_filter_emp(request):
+    d = tbl_Registration_Details.objects.get(id=request.session['admin_id'])
+    month = request.POST.get("month")
+    year, month = month.split("-")
+    emp = request.POST.get("employee")
+    emp_list = tbl_Employees.objects.all()
+    data = IdleSession.objects.filter(date__month=int(month), user=emp, date__year=int(year))
+    return render(request, "idle_time_view.html", {"d": d, "data": data, "emp_list": emp_list})
+
+
+
+def save_reason(request):
+    if request.method == "POST":
+        data = json.loads(request.body)
+        row_id = data.get("row_id")
+        reason = data.get("reason")
+
+        try:
+            row = IdleSession.objects.get(id=row_id)
+            row.reason = reason  # Update the reason field
+            row.save()
+            return JsonResponse({"success": True})
+        except IdleSession.DoesNotExist:
+            return JsonResponse({"success": False, "error": "Row not found"})
+    return JsonResponse({"success": False, "error": "Invalid request"})

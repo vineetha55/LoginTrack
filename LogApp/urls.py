@@ -29,6 +29,8 @@ urlpatterns=[
     path("current_month/",views.current_month,name="current_month"),
     path("update_admin/",views.update_admin,name="update_admin"),
     path("view_all_admins/",views.view_all_admins,name="view_all_admins"),
-    path("idle_time_view/",views.idle_time_view,name="idle_time_view")
+    path("idle_time_view/",views.idle_time_view,name="idle_time_view"),
+    path("idle_filter_emp/",views.idle_filter_emp,name="idle_filter_emp"),
+    path('save_reason/', views.save_reason, name='save_reason'),
 
 ]
