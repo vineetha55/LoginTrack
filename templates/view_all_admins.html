@@ -3,8 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+
+
+  <style>
+  .btn-outline-primary {
+    color: purple !important;
+    border-color: purple !important;
+  }
+
+  .btn-outline-primary:hover {
+    background-color: purple !important;
+    color: white !important;
+  }
+</style>
 </head>
 <body>
 {% include 'left_nav.html' %}
+<table class="table table-striped table-bordered table-light">
+  <thead>
+    <tr>
+       <th scope="col">#</th>
+      <th scope="col">Name</th>
+    <th scope="col">Email</th>
+    <th scope="col">Mobile</th>
+    <th scope="col">Password</th>
+        <th scope="col">Account Created</th>
+
+<!--      <th scope="col" colspan="3">Actions</th>-->
+    </tr>
+  </thead>
+  <tbody>
+  {% for i in data  %}
+    <tr>
+      <th scope="row">{{forloop.counter}}</th>
+      <td>{{i.username}}</td>
+    <td>{{i.email}}</td>
+
+    <td>{{i.mobile}}</td>
+    <td>{{i.password}}</td>
+          <td>{{i.created_date}},&nbsp;{{i.created_time}}</td>
+<!--      <td><a href="/edit_admin/{{i.id}}" class="btn btn-outline-primary">Edit</a></td>-->
+<!--      <td><a href="/delete_admin/{{i.id}}" class="btn btn-outline-primary">Delete</a></td>-->
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
 </body>
 </html>

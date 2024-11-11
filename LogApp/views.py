@@ -368,3 +368,8 @@ def view_all_admins(request):
     data=tbl_Registration_Details.objects.all().exclude(id=request.session['admin_id'])
     d=tbl_Registration_Details.objects.get(id=request.session['admin_id'])
     return render(request,"view_all_admins.html",{"data":data,"d":d})
+
+
+def idle_time_view(request):
+    data=IdleSession.objects.all()
+    return render(request,"idle_time_view.html",{"data":data})
