@@ -6,7 +6,7 @@
 </head>
 <body>
 {% include 'left_nav.html' %}
-    <form action="/update_employee/{{d.id}}" method="post" enctype="multipart/form-data">{% csrf_token %}
+    <form action="/update_employee/{{d1.id}}" method="post" enctype="multipart/form-data">{% csrf_token %}
         <div class="container">
           <h1>Edit Form</h1>
           <p>Please edit in this form to update an Employee.</p>
@@ -25,9 +25,16 @@
 <label for="psw"><b>Joining Date</b></label>
           <input type="date"  class="form-control" name="join_date" value="{{d1.joining_date|date:'Y-m-d'}}" required>
 
+            <label for="psw"><b>Starting Time</b></label>
+          <input type="time"  class="form-control" name="start_time" value="{{d1.start_time|date:'H:i:s'}}" required>
+
+
+            <label for="psw"><b>Ending Time</b></label>
+          <input type="time"  class="form-control" name="end_time" value="{{d1.end_time|date:'H:i:s'}}" required>
+
           <div class="clearfix">
 
-            <button type="submit" class="btn btn-info">Create</button>
+            <button type="submit" class="btn btn-outline-primary">Create</button>
           </div>
         </div>
       </form>

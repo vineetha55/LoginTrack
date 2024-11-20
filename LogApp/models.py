@@ -19,6 +19,8 @@ class tbl_Employees(models.Model):
     mobile = models.IntegerField(null=True)
     password = models.CharField(max_length=100, null=True)
     joining_date=models.DateField(null=True)
+    start_time=models.TimeField(null=True)
+    end_time=models.TimeField(null=True)
     created_date = models.DateField(auto_now_add=True)
     updated_date = models.DateField(auto_now=True)
     created_time = models.TimeField(auto_now_add=True)
@@ -27,8 +29,10 @@ class tbl_Employees(models.Model):
 
 class tbl_member_arrival_and_left_time_details(models.Model):
     emp_id = models.ForeignKey(tbl_Employees,on_delete=models.CASCADE,related_name="member_arrival_and_left_time_details_member_id", null=True)
-    arrival_time = models.TimeField(null=True)
-    left_time = models.TimeField(null=True)
+    arrival_time = models.TimeField(null=True,blank=True)
+    left_time = models.TimeField(null=True,blank=True)
+    arrival_status=models.CharField(max_length=255, null=True)
+    left_status=models.CharField(max_length=255, null=True)
     public_ip = models.CharField(max_length=255, null=True)
     private_ip = models.CharField(max_length=255, null=True)
     country_code = models.CharField(max_length=255, null=True)

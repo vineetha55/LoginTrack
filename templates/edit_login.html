@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% include 'left_nav.html' %}
+    <form action="/update_login/{{obj.id}}" method="post" enctype="multipart/form-data">{% csrf_token %}
+        <div class="container">
+          <h1>Edit Form</h1>
+          <p>Please edit in this form to update a Log.</p>
+
+              <label for="email"><b>Name</b></label>
+            <input type="text" name="name"  class="form-control" value="{{obj.emp_id.name}}" readonly>
+          <label for="email"><b>Date</b></label>
+          <input type="text" placeholder="Enter Email" name="date" class="form-control" value="{{obj.dt}}" readonly>
+
+          <label for="psw"><b>Arrival time</b></label>
+          <input type="text"  class="form-control" value="{{obj.arrival_time|date:'H:i:s'}}" name="arrival_time" required>
+
+                  <label for="email"><b>Left Time</b></label>
+            <br>
+           <input type="text" name="left_time" class="form-control mb-3" value="{{obj.left_time|date:'H:i:s'}}"  >
+<label for="psw"><b>Login Status</b></label>
+          <input type="text"  class="form-control" name="login_status" value="{{obj.login_status}}" >
+
+          <div class="clearfix">
+
+            <button type="submit" class="btn btn-outline-primary">Update</button>
+          </div>
+        </div>
+      </form>
+
+
+</body>
+</html>

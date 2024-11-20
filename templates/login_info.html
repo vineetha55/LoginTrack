@@ -79,6 +79,8 @@
     <th scope="col">Arrival Time</th>
     <th scope="col">Left Time</th>
     <th scope="col">login Status</th>
+        <th scope="col">Action</th>
+        <th scope="col">Action</th>
 
     </tr>
   </thead>
@@ -91,6 +93,8 @@
       <td>{{i.arrival_time}}</td>
     <td>{{i.left_time}}</td>
     <td>{{i.login_status}}</td>
+        <td><a href="/edit_login/{{i.id}}">Edit</a></td>
+        <td><a href="/delete_login/{{i.id}}">Delete</a></td>
       <td><a href="/full_details/{{i.id}}">Full Details</a></td>
 
     </tr>

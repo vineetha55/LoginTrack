@@ -140,6 +140,7 @@
           </td>
         {% else %}
         <td>{{i.reason}}</td>
+        <td><a href="/delete_idle/{{i.id}}">Delete</a></td>
         {% endif %}
     </tr>
   {% endfor %}

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.1.0/css/buttons.dataTables.min.css">
+
+    <style>
+  .btn-outline-primary {
+    color: purple !important;
+    border-color: purple !important;
+  }
+
+  .btn-outline-primary:hover {
+    background-color: purple !important;
+    color: white !important;
+  }
+</style>
+</head>
+<body>
+{% include 'left_nav.html' %}
+    <form action="/monthly_log_status1/" method="post">{% csrf_token %}
+<div class="row">
+  <div class="col-sm-3">
+    <select name="employee" class="form-control">
+      <option>Select any Employee</option>
+      {% for i in emp_list %}
+      <option value="{{i.id}}">{{i.name}}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="col-sm-2">
+ <input type="month" class="form-control" name="month" >
+  </div>
+  <div class="col-sm-1">
+    <button type="submit" class="btn btn-outline-primary">Search</button>
+  </div>
+
+<div class="col-sm-2"></div>
+
+</div>
+        </form>
+<p>{% if messages %}
+{% for i in messages %}
+    <h6 style="color:red;">{{i}}</h6>
+{% endfor %}
+{% endif %}</p>
+<table class="table table-striped">
+  <thead>
+    <tr>
+    <th scope="col">#</th>
+    <th scope="col">Employee Name</th>
+      <th scope="col">Date</th>
+    <th scope="col">Arrival Time</th>
+    <th scope="col">Left Time</th>
+    <th scope="col">login Status</th>
+        <th scope="col">Logout Status</th>
+
+    </tr>
+  </thead>
+  <tbody>
+  {% for i in data  %}
+    <tr>
+      <th scope="row">{{forloop.counter}}</th>
+      <td>{{i.emp_id.name}}</td>
+       <td>{{i.dt}}</td>
+      <td>{{i.arrival_time}}</td>
+    <td>{{i.left_time}}</td>
+    <td>{{i.arrival_status}}</td>
+         <td>{{i.left_status}}</td>
+
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+<p style="color:red;">Total Late Check-ins : <b>{{total_late}}</b></p>
+<p style="color:red;">Total Early Check-outs : <b>{{total_early}}</b> </p>
+</body>
+</html>

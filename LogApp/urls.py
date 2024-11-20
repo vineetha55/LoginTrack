@@ -32,5 +32,11 @@ urlpatterns=[
     path("idle_time_view/",views.idle_time_view,name="idle_time_view"),
     path("idle_filter_emp/",views.idle_filter_emp,name="idle_filter_emp"),
     path('save_reason/', views.save_reason, name='save_reason'),
+    path("delete_login/<id>",views.delete_login,name="delete_login"),
+    path("edit_login/<id>",views.edit_login,name="edit_login"),
+    path("update_login/<id>",views.update_login,name="update_login"),
+    path("delete_idle/<id>",views.delete_idle,name="delete_idle"),
+    path("monthly_log_status/",views.monthly_log_status,name="monthly_log_status"),
+    path("monthly_log_status1/",views.monthly_log_status1,name="monthly_log_status1")
 
 ]
