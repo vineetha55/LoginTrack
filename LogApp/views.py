@@ -1,6 +1,8 @@
 import json
-from datetime import date
+from datetime import date, time
 
+from django.conf import settings
+from django.contrib import messages
 from django.http import JsonResponse
 from django.shortcuts import render,redirect
 from django.utils import timezone
@@ -39,8 +41,8 @@ def check_login(request):
 
 def Admin_Dashboard(request):
     total_emp=tbl_Employees.objects.all().count()
-    total_atte= 0 if tbl_member_arrival_and_left_time_details.objects.filter(dt=date.today()).first()==None else tbl_member_arrival_and_left_time_details.objects.filter(dt=date.today()).first().count()
-    return render(request,"Admin_Dashboard.html",{"total_emp":total_emp,"total_atte":total_atte})
+    total_atte= 0 if tbl_member_arrival_and_left_time_details.objects.filter(dt=date.today()).first()==None else tbl_member_arrival_and_left_time_details.objects.filter(dt=date.today()).count()
+    return render(request,"Admin_Dashboard.html",{"total_emp":total_emp,"total_atte":total_atte,'current_date': datetime.now().strftime('%Y-%m-%d')})
 
 
 def profile(request):
@@ -61,6 +63,8 @@ def save_employee(request):
         obj.mobile=request.POST.get("mobile")
         obj.password=request.POST.get("password")
         obj.joining_date = request.POST.get("join_date")
+        obj.start_time = request.POST.get("start_time")
+        obj.end_time = request.POST.get("end_time")
         obj.save()
         return redirect("/view_employee/")
 
@@ -135,8 +139,23 @@ def desktop_app_login_api(request):
                 from datetime import datetime
 
                 now = datetime.now()
-
                 current_time = now.strftime("%H:%M:%S")
+                current_hour = now.hour  # Extract hour to determine morning or noon login
+
+                morning_start_time = data_login.start_time
+                noon_start_time = time(13, 45)
+                arrival_time = timezone.now().time()
+
+                if current_hour < 13:
+                    session_start_time = morning_start_time
+                else:
+                    session_start_time = noon_start_time
+
+                # Check if arrival time is before or equal to the session start time
+                if arrival_time <= session_start_time:
+                    arrival_status = "On Time"
+                else:
+                    arrival_status = "Late"
 
                 member_login_log_save = tbl_member_arrival_and_left_time_details(
                     emp_id_id=user_login_id,
@@ -156,6 +175,7 @@ def desktop_app_login_api(request):
                     login_system_ip_address=IPAddr,
                     login_system_name=hostname,
                     arrival_time=timezone.now().time(),
+                    arrival_status=arrival_status
 
                 )
                 member_login_log_save.save()
@@ -213,10 +233,24 @@ def desktop_app_logout_api(request):
         latest_entry = tbl_member_arrival_and_left_time_details.objects.filter(
             emp_id=emp_record, login_status="login", left_time__isnull=True
         ).last()
+        current_time = timezone.now().time()
 
+        noon_end_time = time(13, 10)
+        evening_end_time = emp_record.end_time
+        if current_time <= noon_end_time:
+            session_start_time = noon_end_time
+        else:
+            session_start_time = evening_end_time
+
+        # Check if arrival time is before or equal to the session start time
+        if current_time <= session_start_time:
+            left_status = "Before time"
+        else:
+            left_status = "On Time"
         if latest_entry:
             latest_entry.left_time = timezone.now().time()
             latest_entry.login_status = "Logged Out"
+            latest_entry.left_status=left_status
             latest_entry.save()
             return JsonResponse({'message': 'Logout time recorded successfully.'})
 
@@ -241,6 +275,8 @@ def update_employee(request,id):
     obj.email = request.POST.get("email")
     obj.mobile = request.POST.get("mobile")
     obj.password = request.POST.get("password")
+    obj.start_time = request.POST.get("start_time")
+    obj.end_time = request.POST.get("end_time")
     obj.save()
     return redirect("/view_employee/")
 
@@ -248,7 +284,32 @@ def delete_emp(request,id):
     obj=tbl_Employees.objects.get(id=id)
     obj.delete()
     return redirect("/view_employee/")
+def delete_idle(request,id):
+    obj=IdleSession.objects.get(id=id)
+    obj.delete()
+    return redirect("/idle_time_view/")
+def edit_login(request,id):
+    obj=tbl_member_arrival_and_left_time_details.objects.get(id=id)
+    return render(request,"edit_login.html",{"obj":obj})
+def delete_login(request,id):
+    obj=tbl_member_arrival_and_left_time_details.objects.get(id=id)
+    obj.delete()
+    return redirect("/login_info/")
 
+
+def update_login(request,id):
+    obj=tbl_member_arrival_and_left_time_details.objects.get(id=id)
+    if request.POST.get("arrival_time") == '':
+        obj.arrival_time = None
+    else:
+        obj.arrival_time = request.POST.get("arrival_time")
+    if request.POST.get("left_time") == '':
+        obj.left_time=None
+    else:
+        obj.left_time = request.POST.get("left_time")
+    obj.login_status=request.POST.get("login_status")
+    obj.save()
+    return redirect("/login_info/")
 def login_info_emp(request,id):
     emp=tbl_Employees.objects.get(id=id)
     d=tbl_member_arrival_and_left_time_details.objects.filter(emp_id=id)
@@ -266,7 +327,7 @@ from datetime import datetime, timedelta
 from datetime import datetime, timedelta
 from django.http import JsonResponse
 from .models import tbl_Employees, IdleSession
-
+from .utils import send_sms
 @csrf_exempt
 def idle_notification_api(request):
     if request.method == 'POST':
@@ -300,7 +361,17 @@ def idle_notification_api(request):
                 idle_end=idle_end_time,
                 total_idle_time=total_idle_time
             )
+            message = (
+                f"Idle Time Alert:\n"
+                f"User: {user.name}\n"
+                f"Date: {idle_start_time.date()}\n"
+                f"Idle Start: {idle_start_time}\n"
+                f"Idle End: {idle_end_time}\n"
+                f"Total Idle Time: {total_idle_time}"
+            )
 
+            # Send SMS to admin
+            send_sms(settings.ADMIN_PHONE_NUMBER, message)
             return JsonResponse({'message': 'Idle session recorded successfully.'}, status=200)
 
         except tbl_Employees.DoesNotExist:
@@ -403,3 +474,33 @@ def save_reason(request):
         except IdleSession.DoesNotExist:
             return JsonResponse({"success": False, "error": "Row not found"})
     return JsonResponse({"success": False, "error": "Invalid request"})
+
+
+def monthly_log_status(request):
+    d=tbl_Registration_Details.objects.get(id=request.session['admin_id'])
+    emp_list=tbl_Employees.objects.all()
+    return render(request,"monthly_log_status.html",{"d":d,"emp_list":emp_list})
+
+
+def monthly_log_status1(request):
+    d = tbl_Registration_Details.objects.get(id=request.session['admin_id'])
+    month = request.POST.get("month")
+    print(month,"jj")
+
+    emp = request.POST.get("employee")
+    if emp =="Select any Employee":
+        messages.error(request,"Please select an Employee")
+        return redirect("/monthly_log_status/")
+    if not month :
+        messages.error(request,"Please select a Month")
+        return redirect("/monthly_log_status/")
+    year, month = month.split("-")
+    emp_list = tbl_Employees.objects.all()
+    data = tbl_member_arrival_and_left_time_details.objects.filter(dt__month=int(month), emp_id=emp, dt__year=int(year))
+    total_late = data.filter(arrival_status="Late").count()
+    total_early = data.filter(left_status="Before time").count()
+    return render(request,"monthly_log_status.html",{"d":d,"emp_list":emp_list,"data":data,
+                                                     "total_late":total_late,"total_early":total_early})
+
+
+
