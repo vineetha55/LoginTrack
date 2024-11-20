@@ -37,6 +37,7 @@ urlpatterns=[
     path("update_login/<id>",views.update_login,name="update_login"),
     path("delete_idle/<id>",views.delete_idle,name="delete_idle"),
     path("monthly_log_status/",views.monthly_log_status,name="monthly_log_status"),
-    path("monthly_log_status1/",views.monthly_log_status1,name="monthly_log_status1")
+    path("monthly_log_status1/",views.monthly_log_status1,name="monthly_log_status1"),
+    path("download_csv/",views.download_csv,name="download_csv")
 
 ]

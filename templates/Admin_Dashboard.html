@@ -108,8 +108,16 @@
   </aside>
   <main id="main" class="main">
     <div class="pagetitle">
-      <h1>Dashboard</h1>
-      <p>{{current_date}}</p>
+        <div class="row">
+            <div class="col-sm-6">
+                 <h1>Dashboard</h1>
+            </div>
+            <div class="col-sm-6">
+                  <p id="greetingText" style="display: inline; margin-left: 20px;"></p> <!-- Inline greeting text -->
+
+            </div>
+        </div>
+
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="/">Home</a></li>
@@ -168,5 +176,43 @@
   <script src="{% static 'assets/vendor/tinymce/tinymce.min.js' %}"></script>
   <script src="{% static 'assets/vendor/php-email-form/validate.js' %}"></script>
   <script src="{% static 'assets/js/main.js' %}"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const greetingTextElement = document.getElementById('greetingText');
+
+    function updateGreetingAndTime() {
+      const now = new Date();
+
+      // Format date
+      const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+      const formattedDate = now.toLocaleDateString('en-US', options);
+
+      // Format time with leading zeros for hours, minutes, and seconds
+      const hours = String(now.getHours()).padStart(2, '0');
+      const minutes = String(now.getMinutes()).padStart(2, '0');
+      const seconds = String(now.getSeconds()).padStart(2, '0');
+      const formattedTime = `${hours}:${minutes}:${seconds}`;
+
+      // Determine greeting based on time
+      let greeting;
+      if (now.getHours() < 12) {
+        greeting = "Good morning";
+      } else if (now.getHours() < 18) {
+        greeting = "Good afternoon";
+      } else {
+        greeting = "Good evening";
+      }
+
+      // Display greeting, date, and time in the same line
+      greetingTextElement.textContent = `${greeting}, {{ d.username }}! | ${formattedDate} | ${formattedTime}`;
+    }
+
+    // Initial call to set greeting, date, and time
+    updateGreetingAndTime();
+
+    // Update time every second
+    setInterval(updateGreetingAndTime, 1000);
+  });
+</script>
 </body>
 </html>

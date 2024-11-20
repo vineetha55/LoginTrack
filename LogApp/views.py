@@ -3,7 +3,7 @@ from datetime import date, time
 
 from django.conf import settings
 from django.contrib import messages
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render,redirect
 from django.utils import timezone
 from django.views.decorators.csrf import csrf_exempt
@@ -501,6 +501,22 @@ def monthly_log_status1(request):
     total_early = data.filter(left_status="Before time").count()
     return render(request,"monthly_log_status.html",{"d":d,"emp_list":emp_list,"data":data,
                                                      "total_late":total_late,"total_early":total_early})
+import csv
 
+def download_csv(request):
+    # Create the HttpResponse object with CSV content type
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="table_data.csv"'
 
+    # Create a CSV writer
+    writer = csv.writer(response)
 
+    # Write the header row
+    writer.writerow(['Employee name', 'Arrival Time', 'Left time','Date','Arrival status','Left Status'])  # Replace with your actual column names
+
+    # Write data rows
+    for obj in tbl_member_arrival_and_left_time_details.objects.all():
+        print(obj.arrival_time)
+        writer.writerow([obj.emp_id.name, obj.arrival_time, obj.left_time,obj.dt,obj.arrival_status,obj.left_status])  # Replace field names with your model's fields
+
+    return response
