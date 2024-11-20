@@ -122,7 +122,15 @@ STATICFILES_DIRS=[os.path.join(BASE_DIR,"static")]
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-TWILIO_ACCOUNT_SID = 'AC96d0503f91daa1c67a3db0829ec7602e'
-TWILIO_AUTH_TOKEN = 'ff472b38190d80c0d18a180b71d2aa09'
+
+
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+
+TWILIO_ACCOUNT_SID = os.getenv("TWILIO_ACCOUNT_SID")
+TWILIO_AUTH_TOKEN = os.getenv("TWILIO_AUTH_TOKEN")
+
 TWILIO_PHONE_NUMBER = '+12563339972'
 ADMIN_PHONE_NUMBER = '+917902955231'  # Replace with your admin's phone number
