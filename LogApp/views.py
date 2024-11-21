@@ -275,6 +275,7 @@ def update_employee(request,id):
     obj.email = request.POST.get("email")
     obj.mobile = request.POST.get("mobile")
     obj.password = request.POST.get("password")
+    obj.joining_date = request.POST.get("join_date")
     obj.start_time = request.POST.get("start_time")
     obj.end_time = request.POST.get("end_time")
     obj.save()

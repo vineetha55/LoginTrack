@@ -96,6 +96,16 @@
       <td>{{i.arrival_time}}</td>
     <td>{{i.left_time}}</td>
     <td>{{i.login_status}}</td>
+        {% if i.arrival_status == None %}
+        <td>Not Updated</td>
+        {% else %}
+           <td>{{i.arrival_status}}</td>
+        {% endif %}
+         {% if i.left_status == None %}
+         <td>Not Updated</td>
+        {% else %}
+    <td>{{i.left_status}}</td>
+        {% endif %}
         <td><a href="/edit_login/{{i.id}}" class="btn btn-outline-primary">Edit</a></td>
         <td><a href="/delete_login/{{i.id}}" class="btn btn-outline-primary">Delete</a></td>
       <td><a href="/full_details/{{i.id}}" class="btn btn-outline-primary">Full Details</a></td>
