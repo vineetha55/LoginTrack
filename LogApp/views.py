@@ -318,7 +318,7 @@ def update_login(request,id):
         obj.left_time = request.POST.get("left_time")
     obj.login_status=request.POST.get("login_status")
     obj.arrival_status=request.POST.get("arrival_status")
-    obj.let_status=request.POST.get("left_status")
+    obj.left_status=request.POST.get("left_status")
     obj.save()
     return redirect("/login_info/")
 def login_info_emp(request,id):
