@@ -152,11 +152,16 @@ def desktop_app_login_api(request):
 
                 if current_hour < 13:
                     session_start_time = morning_start_time
-                else:
+                elif 13 < current_hour < 18:
                     session_start_time = noon_start_time
+                else:
+                    session_start_time="None"
+
 
                 # Check if arrival time is before or equal to the session start time
-                if arrival_time <= session_start_time:
+                if session_start_time == "None":
+                    arrival_status="Not Updated"
+                elif arrival_time <= session_start_time:
                     arrival_status = "On Time"
                 else:
                     arrival_status = "Late"
@@ -244,14 +249,19 @@ def desktop_app_logout_api(request):
         temp_datetime = datetime.combine(datetime.today(), evening_end_time)
         new_datetime = temp_datetime - timedelta(minutes=1)
         evening_end_time=new_datetime.time()
-
-        if current_time <= noon_end_time:
+        now=datetime.now()
+        current_hour = now.hour
+        if 13< current_hour <18:
+            session_start_time="None"
+        elif current_time <= noon_end_time:
             session_start_time = noon_end_time
         else:
             session_start_time = evening_end_time
 
         # Check if arrival time is before or equal to the session start time
-        if current_time <= session_start_time:
+        if session_start_time=="None":
+            left_status="Not Updated"
+        elif current_time <= session_start_time:
             left_status = "Before time"
         else:
             left_status = "On Time"
