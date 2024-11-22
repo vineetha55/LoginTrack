@@ -143,8 +143,12 @@ def desktop_app_login_api(request):
                 current_hour = now.hour  # Extract hour to determine morning or noon login
 
                 morning_start_time = data_login.start_time
-                noon_start_time = time(13, 45)
+                temp_datetime = datetime.combine(datetime.today(), morning_start_time)
+                new_datetime = temp_datetime + timedelta(minutes=1)
+                morning_start_time = new_datetime.time()
+                noon_start_time = time(13, 46)
                 arrival_time = timezone.now().time()
+
 
                 if current_hour < 13:
                     session_start_time = morning_start_time
@@ -235,8 +239,12 @@ def desktop_app_logout_api(request):
         ).last()
         current_time = timezone.now().time()
 
-        noon_end_time = time(13, 10)
+        noon_end_time = time(13, 9)
         evening_end_time = emp_record.end_time
+        temp_datetime = datetime.combine(datetime.today(), evening_end_time)
+        new_datetime = temp_datetime - timedelta(minutes=1)
+        evening_end_time=new_datetime.time()
+
         if current_time <= noon_end_time:
             session_start_time = noon_end_time
         else:
@@ -309,6 +317,8 @@ def update_login(request,id):
     else:
         obj.left_time = request.POST.get("left_time")
     obj.login_status=request.POST.get("login_status")
+    obj.arrival_status=request.POST.get("arrival_status")
+    obj.let_status=request.POST.get("left_status")
     obj.save()
     return redirect("/login_info/")
 def login_info_emp(request,id):
@@ -349,6 +359,7 @@ def idle_notification_api(request):
             # Convert received data to appropriate formats
             idle_start_time = datetime.fromisoformat(idle_start)
             idle_end_time = datetime.fromisoformat(idle_end)
+
 
             # Parse the idle time in minutes and convert to timedelta
             idle_minutes = int(total_idle_minutes.split()[0])  # Extract minutes as integer
@@ -445,7 +456,7 @@ def view_all_admins(request):
 
 
 def idle_time_view(request):
-    data=IdleSession.objects.all()
+    data=IdleSession.objects.all().order_by('-id')
     emp_list=tbl_Employees.objects.all()
     d = tbl_Registration_Details.objects.get(id=request.session['admin_id'])
     return render(request,"idle_time_view.html",{"data":data,"d":d,"emp_list":emp_list})
