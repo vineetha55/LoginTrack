@@ -392,7 +392,7 @@ def idle_notification_api(request):
             )
 
             # Send SMS to admin
-            send_sms(settings.ADMIN_PHONE_NUMBER, message)
+            send_sms(settings.ADMIN_PHONE_NUMBERS, message)
             return JsonResponse({'message': 'Idle session recorded successfully.'}, status=200)
 
         except tbl_Employees.DoesNotExist:
