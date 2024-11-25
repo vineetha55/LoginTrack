@@ -138,8 +138,8 @@ def desktop_app_login_api(request):
 
                 from datetime import datetime
 
-                now = datetime.now()
-                current_time = now.strftime("%H:%M:%S")
+                now = datetime.now().time()
+
                 current_hour = now.hour  # Extract hour to determine morning or noon login
 
                 morning_start_time = data_login.start_time
@@ -152,10 +152,11 @@ def desktop_app_login_api(request):
 
                 if current_hour < 13:
                     session_start_time = morning_start_time
-                elif 13 < current_hour < 18:
-                    session_start_time = noon_start_time
+                elif now >= datetime.strptime("18:00", "%H:%M").time():
+                    session_start_time = "None"
+
                 else:
-                    session_start_time="None"
+                    session_start_time = noon_start_time
 
 
                 # Check if arrival time is before or equal to the session start time
@@ -249,9 +250,7 @@ def desktop_app_logout_api(request):
         temp_datetime = datetime.combine(datetime.today(), evening_end_time)
         new_datetime = temp_datetime - timedelta(minutes=1)
         evening_end_time=new_datetime.time()
-        now=datetime.now()
-        current_hour = now.hour
-        if 13< current_hour <18:
+        if current_time >= datetime.strptime("18:00", "%H:%M").time():
             session_start_time="None"
         elif current_time <= noon_end_time:
             session_start_time = noon_end_time

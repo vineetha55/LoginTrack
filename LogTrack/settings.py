@@ -133,4 +133,4 @@ TWILIO_ACCOUNT_SID = os.getenv("TWILIO_ACCOUNT_SID")
 TWILIO_AUTH_TOKEN = os.getenv("TWILIO_AUTH_TOKEN")
 
 TWILIO_PHONE_NUMBER = '+12563339972'
-ADMIN_PHONE_NUMBER = '+917306723341'  # Replace with your admin's phone number
+ADMIN_PHONE_NUMBER = '+918089627761'  # Replace with your admin's phone number
