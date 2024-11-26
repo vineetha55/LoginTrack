@@ -252,7 +252,7 @@ def desktop_app_logout_api(request):
         evening_end_time=new_datetime.time()
         if current_time >= datetime.strptime("18:00", "%H:%M").time():
             session_start_time="None"
-        elif current_time <= noon_end_time:
+        elif current_time.hour <= 14:
             session_start_time = noon_end_time
         else:
             session_start_time = evening_end_time
